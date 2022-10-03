@@ -1,0 +1,608 @@
+I"�<p>JavaScript, often abbreviated to JS, is a programming language that is one of the core technologies of the World Wide Web, alongside HTML and CSS. As of 2022, 98% of websites use JavaScript on the client side for webpage behavior, often incorporating third-party libraries.</p>
+
+<h1 id="javascript-concepts">JavaScript Concepts</h1>
+
+<h2 id="content">Content</h2>
+
+<ol>
+  <li><strong><a href="#1-call-stack">Call Stack</a></strong></li>
+  <li><strong><a href="#2-primitive-types">Primitive Types</a></strong></li>
+  <li><strong><a href="#3-value-types-and-reference-types">Value Types and Reference Types</a></strong></li>
+  <li><strong><a href="#4-javascript-implicit-coercion">Implicit, Explicit, Nominal, Structuring and Duck Typing</a></strong></li>
+  <li><strong><a href="#5--vs--vs-typeof">== vs === vs typeof</a></strong></li>
+  <li><strong><a href="#6-function-scope-block-scope-and-lexical-scope">Function Scope, Block Scope and Lexical Scope</a></strong></li>
+  <li><strong><a href="#7-expression-vs-statement">Expression vs Statement</a></strong></li>
+  <li><strong><a href="#8-iife-modules-and-namespaces">IIFE, Modules and Namespaces</a></strong></li>
+  <li><strong><a href="#9-message-queue-and-event-loop">Message Queue and Event Loop</a></strong></li>
+  <li><strong><a href="#10-settimeout-setinterval-and-requestanimationframe">setTimeout, setInterval and requestAnimationFrame</a></strong></li>
+  <li><strong><a href="#11-javascript-engines">JavaScript Engines</a></strong></li>
+  <li><strong><a href="#12-bitwise-operators-type-arrays-and-array-buffers">Bitwise Operators, Type Arrays and Array Buffers</a></strong></li>
+  <li><strong><a href="#13-dom-and-layout-trees">DOM and Layout Trees</a></strong></li>
+  <li><strong><a href="#14-factories-and-classes">Factories and Classes</a></strong></li>
+  <li><strong><a href="#15-this-call-apply-and-bind">this, call, apply and bind</a></strong></li>
+  <li><strong><a href="#16-new-constructor-instanceof-and-instances">new, Constructor, instanceof and Instances</a></strong></li>
+  <li><strong><a href="#17-prototype-inheritance-and-prototype-chain">Prototype Inheritance and Prototype Chain</a></strong></li>
+  <li><strong><a href="#18-objectcreate-and-objectassign">Object.create and Object.assign</a></strong></li>
+  <li><strong><a href="#19-map-reduce-filter">map, reduce, filter</a></strong></li>
+  <li><strong><a href="#20-pure-functions-side-effects-state-mutation-and-event-propagation">Pure Functions, Side Effects, State Mutation and Event Propagation</a></strong></li>
+  <li><strong><a href="#21-closures">Closures</a></strong></li>
+  <li><strong><a href="#22-high-order-functions">High Order Functions</a></strong></li>
+  <li><strong><a href="#23-recursion">Recursion</a></strong></li>
+  <li><strong><a href="#24-collections-and-generators">Collections and Generators</a></strong></li>
+  <li><strong><a href="#25-promises">Promises</a></strong></li>
+  <li><strong><a href="#26-asyncawait">async/await</a></strong></li>
+  <li><strong><a href="#27-data-structures">Data Structures</a></strong></li>
+  <li><strong><a href="#28-expensive-operation-and-big-o-notation">Expensive Operation and Big O Notation</a></strong></li>
+  <li><strong><a href="#29-algorithms">Algorithms</a></strong></li>
+  <li><strong><a href="#30-inheritance-polymorphism-and-code-reuse">Inheritance, Polymorphism and Code Reuse</a></strong></li>
+  <li><strong><a href="#31-design-patterns">Design Patterns</a></strong></li>
+  <li><strong><a href="#32-partial-applications-currying-compose-and-pipe">Partial Applications, Currying, Compose and Pipe</a></strong></li>
+  <li><strong><a href="#33-clean-code">Clean Code</a></strong></li>
+</ol>
+
+<hr />
+
+<h2 id="1-call-stack">1 Call stack</h2>
+
+<p>It is a sequence by which functions are executed.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">callstack1</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">first</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">callstack2</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">callstack1</span><span class="p">();</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">second</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">callstack2</span><span class="p">());</span>
+</code></pre></div></div>
+
+<h2 id="2-primitive-types">2 Primitive Types</h2>
+
+<ul>
+  <li>
+    <p>Boolean type</p>
+  </li>
+  <li>
+    <p>Null type</p>
+  </li>
+  <li>
+    <p>Undefined type</p>
+  </li>
+  <li>
+    <p>Number type</p>
+  </li>
+  <li>
+    <p>BigInt type</p>
+  </li>
+  <li>
+    <p>String type</p>
+  </li>
+  <li>
+    <p>Symbol type</p>
+  </li>
+</ul>
+
+<h2 id="3-value-types-and-reference-types">3 value types and reference types</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">abc</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">y</span><span class="p">;</span>
+<span class="nx">a</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">def</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">b</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="4-javascript-implicit-coercion">4 Javascript Implicit Coercion</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">a</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="dl">"</span><span class="s2">3</span><span class="dl">"</span><span class="p">;</span> <span class="c1">//9</span>
+<span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">1</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// "31"</span>
+<span class="nx">a</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">quick</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// quick</span>
+<span class="nx">a</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">();</span> <span class="c1">// QUICK</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="5--vs--vs-typeof">5 == vs === vs typeof</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">a</span> <span class="o">=</span> <span class="mi">55</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">55</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// true</span>
+<span class="nx">b</span> <span class="o">=</span> <span class="mi">55</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">55</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// false</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="6-function-scope">6 function, scope</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">studentList</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Dan</span><span class="dl">"</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Harry</span><span class="dl">"</span> <span class="p">},</span>
+<span class="p">];</span>
+<span class="kd">function</span> <span class="nx">getStudent</span><span class="p">(</span><span class="nx">studentID</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">student</span> <span class="k">of</span> <span class="nx">studentList</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">student</span><span class="p">.</span><span class="nx">id</span> <span class="o">==</span> <span class="nx">studentID</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">student</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">nextStudent</span> <span class="o">=</span> <span class="nx">getStudent</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">nextStudent</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">val</span><span class="p">:</span> <span class="dl">"</span><span class="s2">abc</span><span class="dl">"</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="na">val</span><span class="p">:</span> <span class="dl">"</span><span class="s2">def</span><span class="dl">"</span> <span class="p">},</span>
+<span class="p">];</span>
+<span class="kd">function</span> <span class="nx">bb</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">d</span> <span class="k">of</span> <span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">id</span> <span class="o">==</span> <span class="nx">c</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">val</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">bb</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+</code></pre></div></div>
+
+<h2 id="7-function-declaration--expression">7 function declaration &amp; expression</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">declare</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">));</span>
+<span class="kd">function</span> <span class="nx">declare</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">express</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">a</span> <span class="o">-</span> <span class="nx">b</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">express</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">));</span>
+</code></pre></div></div>
+
+<h2 id="8-iife-modules-and-namespaces">8. IIFE, Modules and Namespaces</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="dl">"</span><span class="s2">From IIFE</span><span class="dl">"</span><span class="p">;</span>
+<span class="p">})();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>function expression</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">l1</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">lffe</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">lf1</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">l1</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">lf1</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>named function</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">l2</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">lf2</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">l1</span><span class="p">);</span>
+<span class="p">};</span>
+<span class="nx">l2</span><span class="p">();</span>
+<span class="c1">// lf2();</span>
+
+<span class="c1">// Modules</span>
+<span class="c1">// import { sum } from "./lib.js";</span>
+<span class="c1">// console.log(sum(1, 2, 3, 4)); // 10</span>
+</code></pre></div></div>
+
+<h2 id="9-message-queue-and-event-loop">9. Message Queue and Event Loop</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">A</span><span class="dl">"</span><span class="p">);</span>
+  <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="nx">display</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">B</span><span class="dl">"</span><span class="p">);</span>
+  <span class="p">},</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">C</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">main</span><span class="p">();</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Output
+
+    A
+    C
+    B
+</code></pre></div></div>
+
+<p>Another Example same as above just long</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">el</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">a</span><span class="dl">"</span><span class="p">);</span>
+  <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">b</span><span class="dl">"</span><span class="p">);</span>
+  <span class="p">},</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="nx">ewl</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">c</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">ewl</span><span class="p">(</span><span class="nx">sec</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">sss</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">(),</span>
+    <span class="nx">nn</span> <span class="o">=</span> <span class="nx">sss</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">(</span><span class="nx">nn</span> <span class="o">-</span> <span class="nx">sss</span> <span class="o">&gt;</span> <span class="nx">sec</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">sss</span> <span class="o">+=</span> <span class="mi">1000</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">el</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>A <code class="language-plaintext highlighter-rouge">stack</code> is an array-like data structure but with some limitations — you can only add items to the back <code class="language-plaintext highlighter-rouge">and</code> only remove the last item.</p>
+
+<p>Another example is a pile of plates — you put them on top of each other <code class="language-plaintext highlighter-rouge">and</code> at any time you can only remove the top one.</p>
+
+<h2 id="11-javascript-engines">11. JavaScript Engines</h2>
+
+<p>The basic job of a JavaScript engine is to take the JavaScript code that a developer writes and convert it to fast, optimized code that can be interpreted by a browser or even embedded into an application.</p>
+
+<p>So how does this work? This depends, of course, on the engine. The two main engines of interest are WebKit’s JavaScriptCore and Google’s V8 engine because they are leveraged by <code class="language-plaintext highlighter-rouge">NativeScript</code>. These two engines handle processing code differently.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Google’s V8 engine</code>, written in C++, also compiles and executes JavaScript source code, handles memory allocation, and garbage collects leftovers. Its design consists of two compilers that assemble source code directly into machine code.</p>
+
+<h2 id="12-bitwise-operators-type-arrays-and-array-buffers">12. Bitwise Operators, Type Arrays and Array Buffers</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 7 = 111
+ 6 = 110
+ 5 = 101
+ 4 = 100
+ 3 = 011
+ 2 = 010
+ 1 = 001
+ 0 = 000
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="kc">true</span><span class="p">);</span> <span class="c1">// true</span>
+
+</code></pre></div></div>
+
+<h2 id="13-dom-and-layout-trees">13. DOM and Layout Trees</h2>
+
+<p><a href="https://projecttutorials.github.io/javascriptDOM/">DOM from projecttutorials</a></p>
+
+<h2 id="14-factories-and-classes">14. Factories and Classes</h2>
+
+<p>A constructor function is initialized with a number of parameters,
+which would be assigned as properties of this, referring to the function itself.
+The first letter of the identifier would be capitalized by convention.</p>
+
+<p>process of <code class="language-plaintext highlighter-rouge">initialization</code>, <code class="language-plaintext highlighter-rouge">adding methods</code></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Hero</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">level</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">level</span> <span class="o">=</span> <span class="nx">level</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Adding a method to the constructor</span>
+<span class="nx">Hero</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">greet</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="s2">`</span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2"> says hello.`</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1">// Creating a new constructor from the parent</span>
+<span class="kd">function</span> <span class="nx">Mage</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">level</span><span class="p">,</span> <span class="nx">spell</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Chain constructor with call</span>
+  <span class="nx">Hero</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">level</span><span class="p">);</span>
+
+  <span class="k">this</span><span class="p">.</span><span class="nx">spell</span> <span class="o">=</span> <span class="nx">spell</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">hero1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Mage</span><span class="p">(</span><span class="dl">"</span><span class="s2">Lejon</span><span class="dl">"</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Magic Missile</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">hero1</span><span class="p">);</span>
+
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">inheritance</code> of a <code class="language-plaintext highlighter-rouge">constructor function</code> and a <code class="language-plaintext highlighter-rouge">class</code></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Initializing a class</span>
+<span class="kd">class</span> <span class="nx">Hero</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">level</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">level</span> <span class="o">=</span> <span class="nx">level</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Adding a method to the constructor</span>
+  <span class="nx">greet</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s2">`</span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2"> says hello.`</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Creating a new class from the parent</span>
+<span class="kd">class</span> <span class="nx">Mage</span> <span class="kd">extends</span> <span class="nx">Hero</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">level</span><span class="p">,</span> <span class="nx">spell</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Chain constructor with super</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">level</span><span class="p">);</span>
+
+    <span class="c1">// Add a new property</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">spell</span> <span class="o">=</span> <span class="nx">spell</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Base Classes</code>: <code class="language-plaintext highlighter-rouge">Declarations</code> and <code class="language-plaintext highlighter-rouge">Expressions</code></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Student is a base class</span>
+<span class="kd">class</span> <span class="nx">Student</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">id</span> <span class="o">=</span> <span class="nx">id</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nx">getDetails</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s2">`Name: </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2"> \n Id: </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nx">print</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">getDetails</span><span class="p">());</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">s1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Student</span><span class="p">(</span><span class="dl">"</span><span class="s2">Petrov</span><span class="dl">"</span><span class="p">,</span> <span class="mi">25094</span><span class="p">);</span>
+<span class="nx">s1</span><span class="p">.</span><span class="nx">print</span><span class="p">();</span>           <span class="c1">// Name: Petrov  Id: 25094</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">s1</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>   <span class="c1">// 25094</span>
+</code></pre></div></div>
+
+<h2 id="15-this-call-apply-and-bind">15. this, call, apply and bind</h2>
+
+<h3 id="call">call</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">a</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">age</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="nx">age</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">b</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">age</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">a</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">age</span><span class="p">);</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">gender</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">m</span><span class="dl">"</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">new</span> <span class="nx">b</span><span class="p">(</span><span class="dl">"</span><span class="s2">dan</span><span class="dl">"</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
+<span class="nx">d</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">b</span><span class="p">(</span><span class="dl">"</span><span class="s2">larry</span><span class="dl">"</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Output</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  b { name: 'dan', age: 1, gender: 'm' }
+  larry
+</code></pre></div></div>
+
+<h3 id="bind">bind</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">bind()</code> method creates a new function that, when called, has its <code class="language-plaintext highlighter-rouge">this</code> keyword set to the provided value, with a given sequence of arguments preceding any provided when the new function is called.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">module</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">x</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+  <span class="na">getX</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">unboundGetX</span> <span class="o">=</span> <span class="nx">module</span><span class="p">.</span><span class="nx">getX</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">unboundGetX</span><span class="p">());</span> <span class="c1">// The function gets invoked at the global scope</span>
+<span class="c1">// expected output: undefined</span>
+
+<span class="kd">const</span> <span class="nx">boundGetX</span> <span class="o">=</span> <span class="nx">unboundGetX</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">module</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">boundGetX</span><span class="p">());</span>
+<span class="c1">// expected output: 42</span>
+</code></pre></div></div>
+
+<p>Another straightforward example</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">aa</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="na">b</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">aa</span><span class="p">;</span>
+  <span class="p">},</span>
+<span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">b</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">c</span><span class="p">());</span>
+
+<span class="kd">const</span> <span class="nx">d</span> <span class="o">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">d</span><span class="p">());</span>
+</code></pre></div></div>
+
+<h3 id="apply">apply</h3>
+
+<p>The apply() method calls the specified function with a given this value, and arguments provided as an array (or an array-like object).</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">];</span>
+
+<span class="kd">const</span> <span class="nx">max</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">numbers</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">max</span><span class="p">);</span>
+<span class="c1">// expected output: 7</span>
+
+<span class="kd">const</span> <span class="nx">min</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">numbers</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">min</span><span class="p">);</span>
+<span class="c1">// expected output: 2</span>
+</code></pre></div></div>
+
+<h2 id="16-new-constructor-instanceof-and-instances">16. new, Constructor, instanceof and Instances</h2>
+
+<h3 id="new">new</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">User</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">isAdmin</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">let</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span><span class="dl">"</span><span class="s2">Jack</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// Jack</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">isAdmin</span><span class="p">);</span> <span class="c1">// false</span>
+</code></pre></div></div>
+
+<h2 id="17-prototype-inheritance-and-prototype-chain">17. Prototype Inheritance and Prototype Chain</h2>
+
+<h3 id="proto"><strong>proto</strong></h3>
+<p>All JavaScript objects have a prototype. Browsers implement prototypes through the <strong>proto</strong> property and this is how we’ll refer to it. This is often called the dunder proto, short for double underscore prototype. Don’t EVER reassign this property or use it directly. The MDN page for <strong>proto</strong> warns us in big red blocks to never do this.</p>
+
+<h3 id="prototype">prototype</h3>
+<p>Functions also have a prototype property. This is distinct from their <strong>proto</strong> property. This makes discussion rather confusing, so I’ll spell out the syntax I’ll be using. When I refer to a prototype and the word “prototype” isn’t highlighted grey, I’m referring to the <strong>proto</strong> property. When I use prototype in grey, I’m talking about a function’s prototype property.</p>
+
+<h3 id="inheritance">Inheritance</h3>
+<p>Inheritance refers to an object’s ability to access methods and other properties from another object. Objects can inherit things from other objects. Inheritance in JavaScript works through something called prototypes and this form of inheritance is often called prototypal inheritance.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">__proto__</span><span class="p">);</span>
+<span class="c1">// -&gt; {constructor: ƒ, __defineGetter__: ƒ, …}</span>
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Fn</span><span class="p">()</span> <span class="p">{}</span>
+<span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Fn</span><span class="p">();</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nx">Fn</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
+<span class="c1">// -&gt; true</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">__proto__</span><span class="p">.</span><span class="nx">__proto__</span><span class="o">===</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
+<span class="c1">// -&gt; true</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">__proto__</span><span class="p">.</span><span class="nx">__proto__</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="kc">null</span><span class="p">);</span>
+<span class="c1">// -&gt; true</span>
+</code></pre></div></div>
+
+<h2 id="18-objectcreate-and-objectassign">18. Object.create and Object.assign</h2>
+
+<h3 id="create">create</h3>
+<p>The <code class="language-plaintext highlighter-rouge">Object.create()</code> method creates a new object, using an existing object as the prototype of the newly created object.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">isHuman</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+  <span class="na">print</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`I am </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2">.\nRobot status: </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">isHuman</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+  <span class="p">},</span>
+<span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">b</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+
+<span class="nx">b</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">John</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">isHuman</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">print</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h3 id="assign">assign</h3>
+<p>The <code class="language-plaintext highlighter-rouge">Object.assign()</code> method copies all enumerable own properties from one or more source objects to a target object. It returns the modified target object.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">target</span> <span class="o">=</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mi">2</span> <span class="p">};</span>
+<span class="kd">const</span> <span class="nx">source</span> <span class="o">=</span> <span class="p">{</span> <span class="na">b</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="na">c</span><span class="p">:</span> <span class="mi">5</span> <span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">returnedTarget</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">source</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">target</span><span class="p">);</span>
+<span class="c1">// expected output: Object { a: 1, b: 4, c: 5 }</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">returnedTarget</span><span class="p">);</span>
+<span class="c1">// expected output: Object { a: 1, b: 4, c: 5 }</span>
+</code></pre></div></div>
+
+<h2 id="19-map-reduce-filter">19. map, reduce, filter</h2>
+
+<h3 id="map">map()</h3>
+<p>The <code class="language-plaintext highlighter-rouge">map()</code> method creates a new array populated with the results of calling a provided function on every element in the calling <code class="language-plaintext highlighter-rouge">array</code>.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+<span class="kd">const</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>
+<span class="c1">//[ 2, 4, 6 ]</span>
+</code></pre></div></div>
+
+<h3 id="filter">filter()</h3>
+<p>The <code class="language-plaintext highlighter-rouge">filter()</code> method creates a shallow copy of a portion of a given array, filtered down to just the elements from the given array that pass the test implemented by the provided function.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">words</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="dl">"</span><span class="s2">spray</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">limit</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">elite</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">exuberant</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">destruction</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">present</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="kd">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">words</span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">word</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">word</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+<span class="c1">// [ 'spray', 'limit', 'elite' ]</span>
+</code></pre></div></div>
+
+<h3 id="map-1">map()</h3>
+<p>The <code class="language-plaintext highlighter-rouge">reduce()</code> method executes a user-supplied “reducer” callback function on each element of the array, in order, passing in the return value from the calculation on the preceding element. The final result of running the reducer across all elements of the array is a single value.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">array1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">];</span>
+
+<span class="c1">// 0 + 1 + 2 + 3 + 4</span>
+<span class="kd">const</span> <span class="nx">initialValue</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">sumWithInitial</span> <span class="o">=</span> <span class="nx">array1</span><span class="p">.</span><span class="nx">reduce</span><span class="p">(</span>
+  <span class="p">(</span><span class="nx">previousValue</span><span class="p">,</span> <span class="nx">currentValue</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">previousValue</span> <span class="o">+</span> <span class="nx">currentValue</span><span class="p">,</span>
+  <span class="nx">initialValue</span>
+<span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sumWithInitial</span><span class="p">);</span>
+<span class="c1">// expected output: 10</span>
+</code></pre></div></div>
+
+<h2 id="21-closures">21. Closures</h2>
+
+<p>A <code class="language-plaintext highlighter-rouge">closure</code> is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment). In other words, a closure gives you access to an outer function’s scope from an inner function. In   , closures are created every time a function is created, at function creation time.</p>
+
+<h3 id="lexical-scoping">Lexical scoping</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">init</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Mozilla</span><span class="dl">'</span><span class="p">;</span> <span class="c1">// name is a local variable created by init</span>
+  <span class="kd">function</span> <span class="nx">displayName</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// displayName() is the inner function, a closure</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// use variable declared in the parent function</span>
+  <span class="p">}</span>
+  <span class="nx">displayName</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="nx">init</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h2 id="22-high-order-functions">22. High Order Functions</h2>
+
+<p>If you’ve done much JavaScript web development, you’ve probably come across functions that use a callback.</p>
+
+<p>A callback function is a function that executes at the end of an operation, once all other operations are complete.</p>
+
+<p>Usually, we pass this function as an argument last, after other parameters. It’s often defined inline as an anonymous function. Callback functions rely on JavaScript’s ability to deal with higher-order functions.</p>
+
+<p>JavaScript is a single-threaded language. This means only one operation can execute at a time.</p>
+
+<p>To avoid operations blocking each other or the system’s main thread (which would cause deadlock), the engine ensures all operations execute in order. They’re queued along this single thread until it’s safe for another transaction of code to occur.</p>
+
+<p>The ability to pass in a function as an argument and run it after the parent function’s other operations are complete is essential for a language to support higher-order functions.</p>
+
+<p>Callback functions in JavaScript allow for asynchronous behavior, so a script can continue executing other functions or operations while waiting for a result.</p>
+
+<p>The ability to pass a callback function is critical when dealing with resources that may return a result after an undetermined period of time.</p>
+
+<p>This higher-order function pattern is very useful in a web development. A script may send a request off to a server, and then need to handle the response whenever it arrives, without requiring any knowledge of the server’s network latency or processing time.</p>
+
+<p>Node.js frequently uses callback functions to make efficient use of server resources. This asynchronous approach is also useful in the case of an app that waits for user input before performing a function. <a href="https://www.sitepoint.com/higher-order-functions-javascript/">read more</a></p>
+
+<h2 id="23-recursion">23. Recursion</h2>
+
+<p><strong>Loosely defined</strong>, recursion is the process of <code class="language-plaintext highlighter-rouge">taking a big problem</code> and <code class="language-plaintext highlighter-rouge">sub-dividing</code> it into multiple, smaller instances of the same problem.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Recursion</code> is a technique for iterating over an operation by having a function call itself repeatedly until it arrives at a result. Most loops can be rewritten in a <code class="language-plaintext highlighter-rouge">recursive style</code>, and in some functional languages this approach to looping is the default.</p>
+
+<h2 id="24-collections-and-generators">24. Collections and Generators</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">Generator</code> object is returned by a generator function and it conforms to both the iterable protocol and the iterator protocol.</p>
+
+<h2 id="25-promises">25. Promises</h2>
+
+<p>The Promise object represents the eventual completion (or failure) of an asynchronous operation and its resulting value.</p>
+
+<h3 id="description">Description</h3>
+
+<p>A Promise is a proxy for a value not necessarily known when the promise is created. It allows you to associate handlers with an asynchronous action’s eventual success value or failure reason. This lets asynchronous methods return values like synchronous methods: instead of immediately returning the final value, the asynchronous method returns a promise to supply the value at some point in the future.<a href="https://hackernoon.com/understanding-promises-in-javascript-13d99df067c1?ref=hackernoon.com">read more</a></p>
+
+<h2 id="26-asyncawait">26. async/await</h2>
+
+<p>Async and Await are extensions of <code class="language-plaintext highlighter-rouge">promises</code></p>
+
+<p>Inside a function marked as async, you are allowed to place the await keyword in front of an expression that returns a Promise. When you do, the execution is paused until the Promise is resolved.</p>
+
+<p>Before we dive into it, let’s take a moment to familiarize you with the async/await style. First, async/await makes the asynchronous code appear and behave like synchronous code. Being that it was built on top of Promises, you could simply see it as a new way of writing synchronous code. Just like Promises themselves, async/await is equally non-blocking.</p>
+
+<p>The purpose of async/await functions is to simplify the behavior of using Promises synchronously and to perform some behavior on a group of Promises. Just as Promises are similar to structured callbacks, one can say that async/await is similar to combining generators and Promises.</p>
+
+<p><a href="https://hackernoon.com/understanding-async-await-in-javascript-1d81bb079b2c">reference1</a>
+<a href="https://blog.pusher.com/promises-async-await/">reference2</a></p>
+
+<h2 id="27-data-structures">27. Data Structures</h2>
+<h2 id="28-expensive-operation-and-big-o-notation">28. Expensive Operation and Big O Notation</h2>
+<h2 id="29-algorithms">29. Algorithms</h2>
+
+<p><a href="https://projecttutorials.github.io/javascriptAlgorithms/">Algorithms from projecttutorials</a></p>
+
+:ET
