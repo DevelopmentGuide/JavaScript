@@ -1,0 +1,318 @@
+I"%<p>The Document Object Model is a cross-platform and language-independent interface that treats an XML or HTML document as a tree structure wherein each node is an object representing a part of the document. The DOM represents a document with a logical tree</p>
+
+<h1 id="javascript-dom">JavaScript DOM</h1>
+
+<h2 id="content">Content</h2>
+<ol>
+  <li><a href="#1-examine-the-dom">Examine the DOM</a></li>
+  <li><a href="#2-getelement">getElement</a></li>
+  <li><a href="#3-queryselector">querySelector</a></li>
+  <li><a href="#4-traversing-dom">Traversing DOM</a></li>
+  <li><a href="#5-createelement">createElement</a></li>
+  <li><a href="#6-events">Events</a></li>
+  <li><a href="#7-events-adv">Events Adv</a></li>
+</ol>
+
+<h2 id="1-examine-the-dom">1. Examine the DOM</h2>
+
+<p>Examine the Document Object Model</p>
+
+<pre><code class="language-JavaScript">console.dir(document);
+console.log(document.domain);
+console.log(document.URL);
+
+console.log(document.title);
+document.title = "Changed";
+console.log(document.title);
+
+console.log(document.doctype);
+console.log(document.head);
+console.log(document.body);
+console.log(document.all);
+console.log(document.all[10]);
+console.log(document.forms[0]);
+console.log(document.links);
+console.log(document.images);
+</code></pre>
+
+<h2 id="2-getelement">2. getElement</h2>
+
+<h4 id="get-element-by-id">Get Element by ID</h4>
+
+<pre><code class="language-JavaScript">console.log(document.getElementById("hrtLogo"));
+
+var headerTitle = document.getElementById("header-title");
+var header = document.getElementById("main-header");
+
+console.log(headerTitle);
+headerTitle.textContent = "Hello";
+headerTitle.innerText = "Goodbye";
+console.log(headerTitle.innerText);
+headerTitle.innerHTML = "&lt;h3&gt;Hello&lt;/h3&gt;";
+header.style.backgroundColor = "#000";
+</code></pre>
+
+<h4 id="get-elements-by-classname">Get Elements by ClassName</h4>
+
+<pre><code class="language-JavaScript">var items = document.getElementsByClassName("list-group-item");
+
+console.log(items);
+console.log(items[1]);
+items[1].textContent = "Hello 2";
+items[1].style.fontWeight = "bold";
+items[1].style.backgroundColor = "yellow";
+
+for (var i = 0; i &lt; items.length; i++) {
+  items[i].style.backgroundColor = "#f4f4f4";
+}
+</code></pre>
+
+<h4 id="get-elements-by-tagname">Get Elements by TagName</h4>
+
+<pre><code class="language-JavaScript">var li = document.getElementsByTagName("li");
+console.log(li);
+console.log(li[1]);
+li[1].textContent = "Hello 2";
+li[1].style.fontWeight = "bold";
+li[1].style.backgroundColor = "yellow";
+
+for (var i = 0; i &lt; li.length; i++) {
+  li[i].style.backgroundColor = "#f4f4f4";
+}
+</code></pre>
+
+<h2 id="3-queryselector">3. querySelector</h2>
+
+<h4 id="query-selector">Query Selector</h4>
+
+<pre><code class="language-JavaScript">var header = document.querySelector("#main-header");
+header.style.borderBottom = "solid 4px #000";
+
+var input = document.querySelector("input");
+input.value = "Hello World";
+
+var submit = document.querySelector('input[type="submit"]');
+submit.value = "SEND";
+
+var item = document.querySelector(".list-group-item");
+item.style.color = "red";
+
+var lastItem = document.querySelector(".list-group-item:last-child");
+lastItem.style.color = "blue";
+
+var secondItem = document.querySelector(".list-group-item:nth-child(2)");
+secondItem.style.color = "coral";
+</code></pre>
+
+<h4 id="queryselectorall">querySelectorAll</h4>
+
+<pre><code class="language-JavaScript">var titles = document.querySelectorAll(".title");
+
+console.log(titles);
+titles[0].textContent = "Hello";
+
+var odd = document.querySelectorAll("li:nth-child(odd)");
+var even = document.querySelectorAll("li:nth-child(even)");
+
+for (var i = 0; i &lt; odd.length; i++) {
+  odd[i].style.backgroundColor = "#f4f4f4";
+  even[i].style.backgroundColor = "#ccc";
+}
+</code></pre>
+
+<h2 id="4-traversing-dom">4. Traversing DOM</h2>
+
+<h4 id="parentnode">parentNode</h4>
+
+<pre><code class="language-JavaScript">var itemList = document.querySelector("#items");
+// parentNode
+console.log(itemList.parentNode);
+itemList.parentNode.style.backgroundColor = "#f4f4f4";
+console.log(itemList.parentNode.parentNode.parentNode);
+</code></pre>
+
+<h4 id="parentelement">parentElement</h4>
+
+<pre><code class="language-JavaScript">console.log(itemList.parentElement);
+itemList.parentElement.style.backgroundColor = "#f4f4f4";
+console.log(itemList.parentElement.parentElement.parentElement);
+</code></pre>
+
+<h4 id="childnodes">childNodes</h4>
+
+<pre><code class="language-JavaScript">console.log(itemList.childNodes);
+console.log(itemList.children);
+console.log(itemList.children[1]);
+itemList.children[1].style.backgroundColor = "yellow";
+</code></pre>
+
+<h4 id="firstchild">FirstChild</h4>
+
+<pre><code class="language-JavaScript">console.log(itemList.firstChild);
+// firstElementChild
+console.log(itemList.firstElementChild);
+itemList.firstElementChild.textContent = "Hello 1";
+</code></pre>
+
+<h4 id="lastchild">lastChild</h4>
+
+<pre><code class="language-JavaScript">console.log(itemList.lastChild);
+lastElementChild;
+console.log(itemList.lastElementChild);
+itemList.lastElementChild.textContent = "Hello 4";
+</code></pre>
+
+<h4 id="nextsibling">nextSibling</h4>
+
+<pre><code class="language-JavaScript">console.log(itemList.nextSibling);
+// nextElementSibling
+console.log(itemList.nextElementSibling);
+</code></pre>
+
+<h4 id="previoussibling">previousSibling</h4>
+
+<pre><code class="language-JavaScript">console.log(itemList.previousSibling);
+previousElementSibling;
+console.log(itemList.previousElementSibling);
+itemList.previousElementSibling.style.color = "green";
+</code></pre>
+
+<h2 id="5-createelement">5. createElement</h2>
+
+<pre><code class="language-JavaScript">// Create a div
+var newDiv = document.createElement("div");
+
+// Add class
+newDiv.className = "hello";
+
+// Add id
+newDiv.id = "hello1";
+
+// Add attr
+newDiv.setAttribute("title", "Hello Div");
+
+// Create text node
+var newDivText = document.createTextNode("Hello World");
+
+// Add text to div
+newDiv.appendChild(newDivText);
+
+var container = document.querySelector("header .container");
+var h1 = document.querySelector("header h1");
+
+console.log(newDiv);
+
+newDiv.style.fontSize = "30px";
+
+container.insertBefore(newDiv, h1);
+</code></pre>
+
+<h2 id="6-events">6. Events</h2>
+
+<h4 id="function">//function</h4>
+<pre><code class="language-JavaScript">function cliQ(a, b) {
+  if (a == true) {
+    return b + ": clicked";
+  } else {
+    return null;
+  }
+}
+</code></pre>
+
+<h4 id="create-object">create Object</h4>
+<pre><code class="language-JavaScript">var button = document
+  .getElementById("button")
+  .addEventListener("click", buttonClick);
+</code></pre>
+
+<h4 id="function-buttonclick">function buttonClick</h4>
+<pre><code class="language-JavaScript">function buttonClick(e) {
+  console.log("Button clicked");
+  document.getElementById("header-title").textContent = "Changed";
+  document.querySelector("#main").style.backgroundColor = "#f4f4f4";
+  console.log(e);
+
+  console.log(e.target);
+  console.log(e.target.id);
+  console.log(e.target.className);
+  console.log(e.target.classList);
+  var output = document.getElementById("output");
+  output.innerHTML = "&lt;h3&gt;" + e.target.id + "&lt;/h3&gt;";
+
+  console.log(e.type);
+
+  console.log(e.clientX);
+  console.log(e.clientY);
+
+  console.log(e.offsetX);
+  console.log(e.offsetY);
+
+  console.log(cliQ(e.altKey, "Alt"));
+  console.log(cliQ(e.ctrlKey, "ctrl"));
+  console.log(cliQ(e.shiftKey, "shift"));
+}
+</code></pre>
+
+<h2 id="7-events-adv">7. Events Adv</h2>
+
+<h4 id="create-object-1">create Object</h4>
+<pre><code class="language-JavaScript">var box = document.getElementById("box");
+var button = document.getElementById("button");
+</code></pre>
+
+<h4 id="mouse-quick-events">mouse quick events</h4>
+<pre><code class="language-JavaScript">button.addEventListener("click", runEvent);
+button.addEventListener("dblclick", runEvent);
+button.addEventListener("mousedown", runEvent);
+button.addEventListener("mouseup", runEvent);
+
+box.addEventListener("mouseenter", runEvent);
+box.addEventListener("mouseleave", runEvent);
+
+box.addEventListener("mouseover", runEvent);
+box.addEventListener("mouseout", runEvent);
+
+box.addEventListener("mousemove", runEvent);
+</code></pre>
+
+<h4 id="keyboard-events">keyboard events</h4>
+<pre><code class="language-JavaScript">var itemInput = document.querySelector('input[type="text"]');
+var form = document.querySelector("form");
+var select = document.querySelector("select");
+
+itemInput.addEventListener("keydown", runEvent);
+itemInput.addEventListener("keyup", runEvent);
+itemInput.addEventListener("keypress", runEvent);
+
+itemInput.addEventListener("focus", runEvent);
+itemInput.addEventListener("blur", runEvent);
+
+itemInput.addEventListener("cut", runEvent);
+itemInput.addEventListener("paste", runEvent);
+
+itemInput.addEventListener("input", runEvent);
+
+select.addEventListener("change", runEvent);
+select.addEventListener("input", runEvent);
+
+form.addEventListener("submit", runEvent);
+</code></pre>
+
+<h4 id="function-runevent">function runEvent</h4>
+<pre><code class="language-JavaScript">function runEvent(e) {
+  e.preventDefault();
+  console.log("EVENT TYPE: " + e.type);
+
+  console.log(e.target.value);
+  document.getElementById("output").innerHTML =
+    "&lt;h3&gt;" + e.target.value + "&lt;/h3&gt;";
+
+  output.innerHTML =
+    "&lt;h3&gt;MouseX: " + e.offsetX + " &lt;/h3&gt;&lt;h3&gt;MouseY: " + e.offsetY + "&lt;/h3&gt;";
+
+  document.body.style.backgroundColor =
+    "rgb(" + e.offsetX + "," + e.offsetY + ", 40)";
+}
+</code></pre>
+
+:ET

@@ -1,0 +1,150 @@
+@import url("font-awesome.min.css");
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,400,600");
+
+:root {
+    --accent: rgb(165, 165, 1);
+    --this_accent: #FFFBE0;
+    --code_accent: rgb(248, 255, 173);
+}
+
+
+#progressBar {
+    top: 0%;
+    background: linear-gradient(to right, rgb(255, 255, 183), yellow);
+}
+
+
+html {
+    background-color: white;
+}
+
+
+#header {
+    background-color: var(--accentdim1);
+}
+
+#header h1,
+a {
+    color: var(--accentdark) !important;
+    font-weight: 600;
+}
+
+
+#nav a:hover {
+    filter: brightness(1.3) !important;
+}
+
+#header img {
+    background-color: var(--accentdim1);
+}
+
+
+#nav .active {
+    background-color: var(--accent) !important;
+    color: var(--white) !important;
+    font-weight: 700;
+}
+
+body {
+    margin-top: 0%;
+    scroll-behavior: smooth !important;
+    background-color: black !important;
+}
+
+.shade-two {
+    background-color: white !important;
+}
+
+.shade-three {
+    background-color: white !important;
+}
+
+.shade-four {
+    background-color: white !important;
+}
+
+#footer {
+    background-color: white !important;
+}
+
+.linK {
+    color: var(--accentdark) !important;
+    font-weight: 600;
+}
+
+.linK:hover {
+    color: var(--accent) !important;
+    font-weight: 600;
+}
+
+a {
+    text-decoration: none;
+}
+
+code {
+    border: 1px solid var(--code_accent);
+    background-color: var(--this_accent);
+    color: var(--accentdark);
+    font-size: 20px;
+    user-select: text !important;
+    margin: 0px 0px 0px 0px !important;
+}
+
+.homeSideBar {
+    background-color: var(--this_accent) !important;
+}
+
+.item {
+    border: 2px solid var(--this_accent);
+    border-radius: 20px;
+    transition: 0.2s;
+}
+
+.item header {
+    border-radius: 0px 0px 20px 20px;
+    background-color: var(--this_accent);
+    color: var(--black);
+}
+
+.item:hover {
+    box-shadow: var(--shadowtiny);
+    transition: 0.2s;
+}
+
+.item img {
+    border-radius: 20px 20px 0px 0px;
+}
+
+@media screen and (max-height: 700px) {
+    #scrollTop {
+        top: 90% !important;
+    }
+}
+
+article p {
+    margin-bottom: 5px !important;
+}
+
+article h1,
+article h2,
+article h3,
+article h4,
+article h5,
+article h6 {
+    font-weight: 600;
+    color: var(--accent) !important;
+}
+
+article h1 {
+    font-size: 40px;
+    margin-top: 40px;
+}
+
+article a {
+    color: var(--accentdark) !important;
+    border-bottom: 1px solid var(--accentdark) !important;
+}
+
+.item_container {
+    margin-bottom: 40px;
+}
