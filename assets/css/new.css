@@ -4,13 +4,17 @@
 :root {
     --accent: rgb(165, 165, 1);
     --this_accent: #FFFBE0;
-    --code_accent: rgb(248, 255, 173);
+    --code_accent: #ffed7b;
 }
 
 
 #progressBar {
     top: 0%;
-    background: linear-gradient(to right, rgb(255, 255, 183), yellow);
+    background: linear-gradient(to right, hsl(52, 100%, 68%), #ffdd00);
+}
+
+a:hover {
+    border: none !important;
 }
 
 
@@ -70,11 +74,12 @@ body {
 .linK {
     color: var(--accentdark) !important;
     font-weight: 600;
+    border: none !important;
 }
 
 .linK:hover {
     color: var(--accent) !important;
-    font-weight: 600;
+    text-decoration: underline;
 }
 
 a {
@@ -104,6 +109,12 @@ code {
     border-radius: 0px 0px 20px 20px;
     background-color: var(--this_accent);
     color: var(--black);
+}
+
+.item h3 {
+    font-size: 30px !important;
+    font-weight: 800 !important;
+    margin-top: 0px !important;
 }
 
 .item:hover {
