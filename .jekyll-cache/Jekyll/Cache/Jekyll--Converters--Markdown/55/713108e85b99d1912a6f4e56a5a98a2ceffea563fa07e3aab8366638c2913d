@@ -1,0 +1,777 @@
+I"�|<p>JavaScript, often abbreviated to JS, is a programming language that is one of the core technologies of the World Wide Web, alongside HTML and CSS. As of 2022, 98% of websites use JavaScript on the client side for webpage behavior, often incorporating third-party libraries.</p>
+
+<h1 id="javascript-overview">JavaScript Overview</h1>
+
+<p>JavaScript is a multi-paradigm, dynamic language with types and operators, standard built-in objects, and methods. Its syntax is based on the Java and C languages — many structures from those languages apply to JavaScript as well. JavaScript supports object-oriented programming with <a href="/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain">object prototypes</a> and classes. It also supports functional programming since functions are <a href="/en-US/docs/Glossary/First-class_Function">first-class</a> that can be easily created via expressions and passed around like any other object.</p>
+
+<p>This page serves as a quick overview of various JavaScript language features, written for readers with background in other languages, such as C or Java.</p>
+
+<h2 id="data-types">Data types</h2>
+
+<p>Let’s start off by looking at the building blocks of any language: the types. JavaScript programs manipulate values, and those values all belong to a type. JavaScript offers seven <em>primitive types</em>:</p>
+
+<ul>
+  <li><a href="/en-US/docs/Web/JavaScript/Data_structures#number_type">Number</a>: used for all number values (integer and floating point) except for <em>very</em> big integers.</li>
+  <li><a href="/en-US/docs/Web/JavaScript/Data_structures#bigint_type">BigInt</a>: used for arbitrarily large integers.</li>
+  <li><a href="/en-US/docs/Web/JavaScript/Data_structures#string_type">String</a>: used to store text.</li>
+  <li><a href="/en-US/docs/Web/JavaScript/Data_structures#boolean_type">Boolean</a>: <code class="language-plaintext highlighter-rouge">true</code> and <code class="language-plaintext highlighter-rouge">false</code> — usually used for conditional logic.</li>
+  <li><a href="/en-US/docs/Web/JavaScript/Data_structures#symbol_type">Symbol</a>: used for creating unique identifiers that won’t collide.</li>
+  <li><a href="/en-US/docs/Web/JavaScript/Data_structures#undefined_type">Undefined</a>: indicating that a variable has not been assigned a value.</li>
+  <li><a href="/en-US/docs/Web/JavaScript/Data_structures#null_type">Null</a>: indicating a deliberate non-value.</li>
+</ul>
+
+<p>Everything else is known as an <a href="/en-US/docs/Web/JavaScript/Data_structures#objects">Object</a>. Common object types include:</p>
+
+<ul>
+  <li>{ {jsxref(“Function”)} }</li>
+  <li>{ {jsxref(“Array”)} }</li>
+  <li>{ {jsxref(“Date”)} }</li>
+  <li>{ {jsxref(“RegExp”)} }</li>
+  <li>{ {jsxref(“Error”)} }</li>
+</ul>
+
+<p>Functions aren’t special data structures in JavaScript — they are just a special type of object that can be called.</p>
+
+<h3 id="numbers">Numbers</h3>
+
+<p>JavaScript has two built-in numeric types: Number and BigInt.</p>
+
+<p>The Number type is a <a href="https://en.wikipedia.org/wiki/Double_precision_floating-point_format">IEEE 754 64-bit double-precision floating point value</a>, which means integers can be safely represented between <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MIN_SAFE_INTEGER">-(2<sup>53</sup> − 1)</a> and <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER">2<sup>53</sup> − 1</a> without loss of precision, and floating point numbers can be stored all the way up to <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_VALUE">1.79 × 10<sup>308</sup></a>. Within numbers, JavaScript does not distinguish between floating point numbers and integers.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// 1.5, not 1</span>
+</code></pre></div></div>
+
+<p>So an <em>apparent integer</em> is in fact <em>implicitly a float</em>. Because of IEEE 754 encoding, sometimes floating point arithmetic can be imprecise.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.2</span><span class="p">);</span> <span class="c1">// 0.30000000000000004</span>
+</code></pre></div></div>
+
+<p>For operations that expect integers, such as bitwise operations, the number will be converted to a 32-bit integer.</p>
+
+<p><a href="/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#numeric_literals">Number literals</a> can also have prefixes to indicate the base (binary, octal, decimal, or hexadecimal), or an exponent suffix.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mb">0b111110111</span><span class="p">);</span> <span class="c1">// 503</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mo">0o767</span><span class="p">);</span> <span class="c1">// 503</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mh">0x1f7</span><span class="p">);</span> <span class="c1">// 503</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mf">5.03e2</span><span class="p">);</span> <span class="c1">// 503</span>
+</code></pre></div></div>
+
+<p>The <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt">BigInt</a> type is an arbitrary length integer. Its behavior is similar to C’s integer types (e.g. division truncates to zero), except it can grow indefinitely. BigInts are specified with a number literal and an <code class="language-plaintext highlighter-rouge">n</code> suffix.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="nx">n</span> <span class="o">/</span> <span class="mi">2</span><span class="nx">n</span><span class="p">);</span> <span class="c1">// -1n</span>
+</code></pre></div></div>
+
+<p>The standard <a href="/en-US/docs/Web/JavaScript/Reference/Operators#arithmetic_operators">arithmetic operators</a> are supported, including addition, subtraction, remainder arithmetic, etc. BigInts and numbers cannot be mixed in arithmetic operations.</p>
+
+<p>The { {jsxref(“Math”)} } object provides standard mathematical functions and constants.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">Math</span><span class="p">.</span><span class="nx">sin</span><span class="p">(</span><span class="mf">3.5</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">circumference</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span> <span class="o">*</span> <span class="nx">r</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>There are three ways to convert a string to a number:</p>
+
+<ul>
+  <li>{ {jsxref(“Global_Objects/parseInt”, “parseInt()”)} }, which parses the string for an integer.</li>
+  <li>{ {jsxref(“Global_Objects/parseFloat”, “parseFloat()”)} }, which parses the string for a floating-point number.</li>
+  <li>The <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/Number"><code class="language-plaintext highlighter-rouge">Number()</code></a> function, which parses a string as if it’s a number literal and supports many different number representations.</li>
+</ul>
+
+<p>You can also use the <a href="/en-US/docs/Web/JavaScript/Reference/Operators/Unary_plus">unary plus <code class="language-plaintext highlighter-rouge">+</code></a> as a shorthand for <code class="language-plaintext highlighter-rouge">Number()</code>.</p>
+
+<p>Number values also include  (short for “Not a Number”) and . Many “invalid math” operations will return <code class="language-plaintext highlighter-rouge">NaN</code> — for example, if attempting to parse a non-numeric string, or using <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log"><code class="language-plaintext highlighter-rouge">Math.log()</code></a> on a negative value. Division by zero produces <code class="language-plaintext highlighter-rouge">Infinity</code> (positive or negative).</p>
+
+<p><code class="language-plaintext highlighter-rouge">NaN</code> is contagious: if you provide it as an operand to any mathematical operation, the result will also be <code class="language-plaintext highlighter-rouge">NaN</code>. <code class="language-plaintext highlighter-rouge">NaN</code> is the only value in JavaScript that’s not equal to itself (per IEEE 754 specification).</p>
+
+<h3 id="strings">Strings</h3>
+
+<p>Strings in JavaScript are sequences of <a href="/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#unicode">Unicode characters</a>. This should be welcome news to anyone who has had to deal with internationalization. More accurately, they are <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/String#utf-16_characters_unicode_codepoints_and_grapheme_clusters">UTF-16 encoded</a>.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Hello, world</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">你好，世界！</span><span class="dl">"</span><span class="p">);</span> <span class="c1">// Nearly all Unicode characters can be written literally in string literals</span>
+</code></pre></div></div>
+
+<p>Strings can be written with either single or double quotes — JavaScript does not have the distinction between characters and strings. If you want to represent a single character, you just use a string consisting of that single character.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Hello</span><span class="dl">"</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">e</span><span class="dl">"</span><span class="p">);</span> <span class="c1">// true</span>
+</code></pre></div></div>
+
+<p>To find the length of a string (in <a href="/en-US/docs/Glossary/Code_unit">code units</a>), access its <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/length"><code class="language-plaintext highlighter-rouge">length</code></a> property.</p>
+
+<p>Strings have <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/String#instance_methods">utility methods</a> to manipulate the string and access information about the string. Because all primitives are immutable by design, these methods return new strings.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">+</code> operator is overloaded for strings: when one of the operands is a string, it performs string concatenation instead of number addition. A special <a href="/en-US/docs/Web/JavaScript/Reference/Template_literals">template literal</a> syntax allows you to write strings with embedded expressions more succinctly. Unlike Python’s f-strings or C#’s interpolated strings, template literals use backticks (not single or double quotes).</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">age</span> <span class="o">=</span> <span class="mi">25</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">I am </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">age</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> years old.</span><span class="dl">"</span><span class="p">);</span> <span class="c1">// String concatenation</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`I am </span><span class="p">${</span><span class="nx">age</span><span class="p">}</span><span class="s2"> years old.`</span><span class="p">);</span> <span class="c1">// Template literal</span>
+</code></pre></div></div>
+
+<h3 id="other-types">Other types</h3>
+
+<p>JavaScript distinguishes between <a href="/en-US/docs/Web/JavaScript/Reference/Operators/null"><code class="language-plaintext highlighter-rouge">null</code></a>, which indicates a deliberate non-value (and is only accessible through the <code class="language-plaintext highlighter-rouge">null</code> keyword), and , which indicates absence of value. There are many ways to obtain <code class="language-plaintext highlighter-rouge">undefined</code>:</p>
+
+<ul>
+  <li>A <a href="/en-US/docs/Web/JavaScript/Reference/Statements/return"><code class="language-plaintext highlighter-rouge">return</code></a> statement with no value (<code class="language-plaintext highlighter-rouge">return;</code>) implicitly returns <code class="language-plaintext highlighter-rouge">undefined</code>.</li>
+  <li>Accessing a nonexistent <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a> property (<code class="language-plaintext highlighter-rouge">obj.iDontExist</code>) returns <code class="language-plaintext highlighter-rouge">undefined</code>.</li>
+  <li>A variable declaration without initialization (<code class="language-plaintext highlighter-rouge">let x;</code>) will implicitly initialize the variable to <code class="language-plaintext highlighter-rouge">undefined</code>.</li>
+</ul>
+
+<p>JavaScript has a Boolean type, with possible values <code class="language-plaintext highlighter-rouge">true</code> and <code class="language-plaintext highlighter-rouge">false</code> — both of which are keywords. Any value can be converted to a boolean according to the following rules:</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">false</code>, <code class="language-plaintext highlighter-rouge">0</code>, empty strings (<code class="language-plaintext highlighter-rouge">""</code>), <code class="language-plaintext highlighter-rouge">NaN</code>, <code class="language-plaintext highlighter-rouge">null</code>, and <code class="language-plaintext highlighter-rouge">undefined</code> all become <code class="language-plaintext highlighter-rouge">false</code>.</li>
+  <li>All other values become <code class="language-plaintext highlighter-rouge">true</code>.</li>
+</ol>
+
+<p>You can perform this conversion explicitly using the <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean/Boolean"><code class="language-plaintext highlighter-rouge">Boolean()</code></a> function:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">Boolean</span><span class="p">(</span><span class="dl">""</span><span class="p">);</span> <span class="c1">// false</span>
+<span class="nb">Boolean</span><span class="p">(</span><span class="mi">234</span><span class="p">);</span> <span class="c1">// true</span>
+</code></pre></div></div>
+
+<p>However, this is rarely necessary, as JavaScript will silently perform this conversion when it expects a boolean, such as in an <code class="language-plaintext highlighter-rouge">if</code> statement (see <a href="#control_structures">Control structures</a>). For this reason, we sometimes speak of “<a href="/en-US/docs/Glossary/Truthy">truthy</a>” and “<a href="/en-US/docs/Glossary/Falsy">falsy</a>”, meaning values that become <code class="language-plaintext highlighter-rouge">true</code> and <code class="language-plaintext highlighter-rouge">false</code>, respectively, when used in boolean contexts.</p>
+
+<p>Boolean operations such as <code class="language-plaintext highlighter-rouge">&amp;&amp;</code> (logical <em>and</em>), <code class="language-plaintext highlighter-rouge">||</code> (logical <em>or</em>), and <code class="language-plaintext highlighter-rouge">!</code> (logical <em>not</em>) are supported; see <a href="#operators">Operators</a>.</p>
+
+<p>The Symbol type is often used to create unique identifiers. Every symbol created with the <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol"><code class="language-plaintext highlighter-rouge">Symbol()</code></a> function is guaranteed to be unique. In addition, there are registered symbols, which are shared constants, and well-known symbols, which are utilized by the language as “protocols” for certain operations. You can read more about them in the <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol">symbol reference</a>.</p>
+
+<h2 id="variables">Variables</h2>
+
+<p>Variables in JavaScript are declared using one of three keywords: <a href="/en-US/docs/Web/JavaScript/Reference/Statements/let"><code class="language-plaintext highlighter-rouge">let</code></a>, <a href="/en-US/docs/Web/JavaScript/Reference/Statements/const"><code class="language-plaintext highlighter-rouge">const</code></a>, or <a href="/en-US/docs/Web/JavaScript/Reference/Statements/var"><code class="language-plaintext highlighter-rouge">var</code></a>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">let</code> allows you to declare block-level variables. The declared variable is available from the <em>block</em> it is enclosed in.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Simon</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="c1">// myLetVariable is *not* visible out here</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">myLetVariable</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">myLetVariable</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">myLetVariable</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// myLetVariable is only visible in here</span>
+<span class="p">}</span>
+
+<span class="c1">// myLetVariable is *not* visible out here</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">const</code> allows you to declare variables whose values are never intended to change. The variable is available from the <em>block</em> it is declared in.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">Pi</span> <span class="o">=</span> <span class="mf">3.14</span><span class="p">;</span> <span class="c1">// Declare variable Pi</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Pi</span><span class="p">);</span> <span class="c1">// 3.14</span>
+</code></pre></div></div>
+
+<p>A variable declared with <code class="language-plaintext highlighter-rouge">const</code> cannot be reassigned.</p>
+
+<p>```js example-bad
+const Pi = 3.14;
+Pi = 1; // will throw an error because you cannot change a constant variable.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+`const` declarations only prevent _reassignments_ — they don't prevent _mutations_ of the variable's value, if it's an object.
+
+```js
+const obj = {};
+obj.a = 1; // no error
+console.log(obj); // { a: 1 }
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">var</code> declarations can have surprising behaviors (for example, they are not block-scoped), and they are discouraged in modern JavaScript code.</p>
+
+<p>If you declare a variable without assigning any value to it, its value is <code class="language-plaintext highlighter-rouge">undefined</code>. You can’t declare a <code class="language-plaintext highlighter-rouge">const</code> variable without an initializer, because you can’t change it later anyway.</p>
+
+<p><code class="language-plaintext highlighter-rouge">let</code> and <code class="language-plaintext highlighter-rouge">const</code> declared variables still occupy the entire scope they are defined in, and are in a region known as the <a href="/en-US/docs/Web/JavaScript/Reference/Statements/let#temporal_dead_zone_tdz">temporal dead zone</a> before the actual line of declaration. This has some interesting interactions with variable shadowing, which don’t occur in other languages.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">condition</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">condition</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">foo</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>In most other languages, this would log “1” and “2”, because before the <code class="language-plaintext highlighter-rouge">const x = 2</code> line, <code class="language-plaintext highlighter-rouge">x</code> should still refer to the parameter <code class="language-plaintext highlighter-rouge">x</code> in the upper scope. In JavaScript, because each declaration occupies the entire scope, this would throw an error on the first <code class="language-plaintext highlighter-rouge">console.log</code>: “Cannot access ‘x’ before initialization”. For more information, see the reference page of <a href="/en-US/docs/Web/JavaScript/Reference/Statements/let"><code class="language-plaintext highlighter-rouge">let</code></a>.</p>
+
+<p>JavaScript is <em>dynamically typed</em>. Types (as described in <a href="#data_types">the previous section</a>) are only associated with values, but not with variables. For <code class="language-plaintext highlighter-rouge">let</code>-declared variables, you can always change its type through reassignment.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nx">a</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">foo</span><span class="dl">"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="operators">Operators</h2>
+
+<p>JavaScript’s numeric operators include <code class="language-plaintext highlighter-rouge">+</code>, <code class="language-plaintext highlighter-rouge">-</code>, <code class="language-plaintext highlighter-rouge">*</code>, <code class="language-plaintext highlighter-rouge">/</code>, <code class="language-plaintext highlighter-rouge">%</code> (remainder), and <code class="language-plaintext highlighter-rouge">**</code> (exponentiation). Values are assigned using <code class="language-plaintext highlighter-rouge">=</code>. Each binary operator also has a compound assignment counterpart such as <code class="language-plaintext highlighter-rouge">+=</code> and <code class="language-plaintext highlighter-rouge">-=</code>, which extend out to <code class="language-plaintext highlighter-rouge">x = x operator y</code>.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">x</span> <span class="o">+=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="nx">x</span> <span class="o">=</span> <span class="nx">x</span> <span class="o">+</span> <span class="mi">5</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>You can use <code class="language-plaintext highlighter-rouge">++</code> and <code class="language-plaintext highlighter-rouge">--</code> to increment and decrement respectively. These can be used as a prefix or postfix operators.</p>
+
+<p>The <a href="/en-US/docs/Web/JavaScript/Reference/Operators#addition"><code class="language-plaintext highlighter-rouge">+</code> operator</a> also does string concatenation:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">"</span><span class="s2">hello</span><span class="dl">"</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> world</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// "hello world"</span>
+</code></pre></div></div>
+
+<p>If you add a string to a number (or other value) everything is converted into a string first. This might trip you up:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">"</span><span class="s2">3</span><span class="dl">"</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">5</span><span class="p">;</span> <span class="c1">// "345"</span>
+<span class="mi">3</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">5</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// "75"</span>
+</code></pre></div></div>
+
+<p>Adding an empty string to something is a useful way of converting it to a string itself.</p>
+
+<p><a href="/en-US/docs/Web/JavaScript/Reference/Operators#relational_operators">Comparisons</a> in JavaScript can be made using <code class="language-plaintext highlighter-rouge">&lt;</code>, <code class="language-plaintext highlighter-rouge">&gt;</code>, <code class="language-plaintext highlighter-rouge">&lt;=</code> and <code class="language-plaintext highlighter-rouge">&gt;=</code>, which work for both strings and numbers. For equality, the <a href="/en-US/docs/Web/JavaScript/Reference/Operators/Equality">double-equals operator</a> performs type coercion if you give it different types, with sometimes interesting results. On the other hand, the <a href="/en-US/docs/Web/JavaScript/Reference/Operators/Strict_equality">triple-equals operator</a> does not attempt type coercion, and is usually preferred.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">123</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">123</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// true</span>
+<span class="mi">1</span> <span class="o">==</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// true</span>
+
+<span class="mi">123</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">123</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// false</span>
+<span class="mi">1</span> <span class="o">===</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// false</span>
+</code></pre></div></div>
+
+<p>The double-equals and triple-equals also have their inequality counterparts: <code class="language-plaintext highlighter-rouge">!=</code> and <code class="language-plaintext highlighter-rouge">!==</code>.</p>
+
+<p>JavaScript also has <a href="/en-US/docs/Web/JavaScript/Reference/Operators#bitwise_shift_operators">bitwise operators</a> and <a href="/en-US/docs/Web/JavaScript/Reference/Operators#binary_logical_operators">logical operators</a>. Notably, logical operators don’t work with boolean values only — they work by the “truthiness” of the value.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="dl">"</span><span class="s2">Hello</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// 0 because 0 is "falsy"</span>
+<span class="kd">const</span> <span class="nx">b</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Hello</span><span class="dl">"</span> <span class="o">||</span> <span class="dl">"</span><span class="s2">world</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// "Hello" because both "Hello" and "world" are "truthy"</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">&amp;&amp;</code> and <code class="language-plaintext highlighter-rouge">||</code> operators use short-circuit logic, which means whether they will execute their second operand is dependent on the first. This is useful for checking for null objects before accessing their attributes:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">o</span> <span class="o">&amp;&amp;</span> <span class="nx">o</span><span class="p">.</span><span class="nx">getName</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>Or for caching values (when falsy values are invalid):</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">cachedName</span> <span class="o">||</span> <span class="p">(</span><span class="nx">cachedName</span> <span class="o">=</span> <span class="nx">getName</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>For a comprehensive list of operators, see the <a href="/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators">guide page</a> or <a href="/en-US/docs/Web/JavaScript/Reference/Operators">reference section</a>. You may be especially interested in the <a href="/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence">operator precedence</a>.</p>
+
+<h2 id="grammar">Grammar</h2>
+
+<p>JavaScript grammar is very similar to the C family. There are a few points worth mentioning:</p>
+
+<ul>
+  <li><a href="/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#identifiers">Identifiers</a> can have Unicode characters, but they cannot be one of the <a href="/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#keywords">reserved words</a>.</li>
+  <li><a href="/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#comments">Comments</a> are commonly <code class="language-plaintext highlighter-rouge">//</code> or <code class="language-plaintext highlighter-rouge">/* */</code>, while many other scripting languages like Perl, Python, and Bash use <code class="language-plaintext highlighter-rouge">#</code>.</li>
+  <li>Semicolons are optional in JavaScript — the language <a href="/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#automatic_semicolon_insertion">automatically inserts them</a> when needed. However, there are certain caveats to watch out, since unlike Python, semicolons are still part of the syntax.</li>
+</ul>
+
+<p>For an in-depth look at the JavaScript grammar, see the <a href="/en-US/docs/Web/JavaScript/Reference/Lexical_grammar">reference page for lexical grammar</a>.</p>
+
+<h2 id="control-structures">Control structures</h2>
+
+<p>JavaScript has a similar set of control structures to other languages in the C family. Conditional statements are supported by <a href="/en-US/docs/Web/JavaScript/Reference/Statements/if...else"><code class="language-plaintext highlighter-rouge">if</code> and <code class="language-plaintext highlighter-rouge">else</code></a>; you can chain them together:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">kittens</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">name</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">puppies</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">+=</span> <span class="dl">"</span><span class="s2"> woof</span><span class="dl">"</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">name</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">kittens</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">+=</span> <span class="dl">"</span><span class="s2"> meow</span><span class="dl">"</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">+=</span> <span class="dl">"</span><span class="s2">!</span><span class="dl">"</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">name</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">kittens meow</span><span class="dl">"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>JavaScript doesn’t have <code class="language-plaintext highlighter-rouge">elif</code>, and <code class="language-plaintext highlighter-rouge">else if</code> is really just an <code class="language-plaintext highlighter-rouge">else</code> branch comprised of a single <code class="language-plaintext highlighter-rouge">if</code> statement.</p>
+
+<p>JavaScript has <a href="/en-US/docs/Web/JavaScript/Reference/Statements/while"><code class="language-plaintext highlighter-rouge">while</code></a> loops and <a href="/en-US/docs/Web/JavaScript/Reference/Statements/do...while"><code class="language-plaintext highlighter-rouge">do...while</code></a> loops. The first is good for basic looping; the second is for loops where you wish to ensure that the body of the loop is executed at least once:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// an infinite loop!</span>
+<span class="p">}</span>
+
+<span class="kd">let</span> <span class="nx">input</span><span class="p">;</span>
+<span class="k">do</span> <span class="p">{</span>
+  <span class="nx">input</span> <span class="o">=</span> <span class="nx">get_input</span><span class="p">();</span>
+<span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="nx">inputIsNotValid</span><span class="p">(</span><span class="nx">input</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>JavaScript’s <a href="/en-US/docs/Web/JavaScript/Reference/Statements/for"><code class="language-plaintext highlighter-rouge">for</code> loop</a> is the same as that in C and Java: it lets you provide the control information for your loop on a single line.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Will execute 5 times</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>JavaScript also contains two other prominent for loops: <a href="/en-US/docs/Web/JavaScript/Reference/Statements/for...of"><code class="language-plaintext highlighter-rouge">for...of</code></a>, which iterates over <a href="/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">iterables</a>, most notably arrays, and <a href="/en-US/docs/Web/JavaScript/Reference/Statements/for...in"><code class="language-plaintext highlighter-rouge">for...in</code></a>, which visits all <a href="/en-US/docs/Web/JavaScript/Enumerability_and_ownership_of_properties">enumerable</a> properties of an object.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">array</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// do something with value</span>
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">property</span> <span class="k">in</span> <span class="nx">object</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// do something with object property</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">switch</code> statement can be used for multiple branches based on equality checking.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">switch</span> <span class="p">(</span><span class="nx">action</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">case</span> <span class="dl">"</span><span class="s2">draw</span><span class="dl">"</span><span class="p">:</span>
+    <span class="nx">drawIt</span><span class="p">();</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">case</span> <span class="dl">"</span><span class="s2">eat</span><span class="dl">"</span><span class="p">:</span>
+    <span class="nx">eatIt</span><span class="p">();</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="nl">default</span><span class="p">:</span>
+    <span class="nx">doNothing</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Similar to C, case clauses are conceptually the same as <a href="/en-US/docs/Web/JavaScript/Reference/Statements/label">labels</a>, so if you don’t add a <code class="language-plaintext highlighter-rouge">break</code> statement, execution will “fall through” to the next level. However, they are not actually jump tables — any expression can be part of the <code class="language-plaintext highlighter-rouge">case</code> clause, not just string or number literals, and they would be evaluated one-by-one until one equals the value being matched. Comparison takes place between the two using the <code class="language-plaintext highlighter-rouge">===</code> operator.</p>
+
+<p>Unlike some languages like Rust, control-flow structures are statements in JavaScript, meaning you can’t assign them to a variable, like <code class="language-plaintext highlighter-rouge">const a = if (x) { 1 } else { 2 }</code>.</p>
+
+<p>JavaScript errors are handled using the <a href="/en-US/docs/Web/JavaScript/Reference/Statements/try...catch"><code class="language-plaintext highlighter-rouge">try...catch</code></a> statement.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span> <span class="p">{</span>
+  <span class="nx">buildMySite</span><span class="p">(</span><span class="dl">"</span><span class="s2">./website</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">"</span><span class="s2">Building site failed:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">e</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Errors can be thrown using the <a href="/en-US/docs/Web/JavaScript/Reference/Statements/throw"><code class="language-plaintext highlighter-rouge">throw</code></a> statement. Many built-in operations may throw as well.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">buildMySite</span><span class="p">(</span><span class="nx">siteDirectory</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">pathExists</span><span class="p">(</span><span class="nx">siteDirectory</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="dl">"</span><span class="s2">Site directory does not exist</span><span class="dl">"</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>In general, you can’t tell the type of the error you just caught, because anything can be thrown from a <code class="language-plaintext highlighter-rouge">throw</code> statement. However, you can usually assume it’s an <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error"><code class="language-plaintext highlighter-rouge">Error</code></a> instance, as is the example above. There are some subclasses of <code class="language-plaintext highlighter-rouge">Error</code> built-in, like <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError"><code class="language-plaintext highlighter-rouge">TypeError</code></a> and <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError"><code class="language-plaintext highlighter-rouge">RangeError</code></a>, that you can use to provide extra semantics about the error. There’s no conditional catch in JavaScript — if you only want to handle one type of error, you need to catch everything, identify the type of error using <a href="/en-US/docs/Web/JavaScript/Reference/Operators/instanceof"><code class="language-plaintext highlighter-rouge">instanceof</code></a>, and then rethrow the other cases.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span> <span class="p">{</span>
+  <span class="nx">buildMySite</span><span class="p">(</span><span class="dl">"</span><span class="s2">./website</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">e</span> <span class="k">instanceof</span> <span class="nx">RangeError</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">"</span><span class="s2">Seems like a parameter is out of range:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">e</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Retrying...</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">buildMySite</span><span class="p">(</span><span class="dl">"</span><span class="s2">./website</span><span class="dl">"</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// Don't know how to handle other error types; throw them so</span>
+    <span class="c1">// something else up in the call stack may catch and handle it</span>
+    <span class="k">throw</span> <span class="nx">e</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>If an error is uncaught by any <code class="language-plaintext highlighter-rouge">try...catch</code> in the call stack, the program will exit.</p>
+
+<p>For a comprehensive list of control flow statements, see the <a href="/en-US/docs/Web/JavaScript/Reference/Statements">reference section</a>.</p>
+
+<h2 id="objects">Objects</h2>
+
+<p>JavaScript objects can be thought of as collections of key-value pairs. As such, they are similar to:</p>
+
+<ul>
+  <li>Dictionaries in Python.</li>
+  <li>Hashes in Perl and Ruby.</li>
+  <li>Hash tables in C and C++.</li>
+  <li>HashMaps in Java.</li>
+  <li>Associative arrays in PHP.</li>
+</ul>
+
+<p>JavaScript objects are hashes. Unlike objects in statically typed languages, objects in JavaScript do not have fixed shapes — properties can be added, deleted, re-ordered, mutated, or dynamically queried at any time. Object keys are always <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">strings</a> or <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol">symbols</a> — even array indices, which are canonically integers, are actually strings under the hood.</p>
+
+<p>Objects are usually created using the literal syntax:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Carrot</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">for</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Max</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">details</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">color</span><span class="p">:</span> <span class="dl">"</span><span class="s2">orange</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">size</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+  <span class="p">},</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>Object properties can be <a href="/en-US/docs/Web/JavaScript/Reference/Operators/Property_Accessors">accessed</a> using dot (<code class="language-plaintext highlighter-rouge">.</code>) or brackets (<code class="language-plaintext highlighter-rouge">[]</code>). When using the dot notation, the key must be a valid <a href="/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#identifiers">identifier</a>. Brackets, on the other hand, allow indexing the object with a dynamic key value.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Dot notation</span>
+<span class="nx">obj</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Simon</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+
+<span class="c1">// Bracket notation</span>
+<span class="nx">obj</span><span class="p">[</span><span class="dl">"</span><span class="s2">name</span><span class="dl">"</span><span class="p">]</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Simon</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">[</span><span class="dl">"</span><span class="s2">name</span><span class="dl">"</span><span class="p">];</span>
+
+<span class="c1">// Can use a variable to define a key</span>
+<span class="kd">const</span> <span class="nx">userName</span> <span class="o">=</span> <span class="nx">prompt</span><span class="p">(</span><span class="dl">"</span><span class="s2">what is your key?</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">obj</span><span class="p">[</span><span class="nx">userName</span><span class="p">]</span> <span class="o">=</span> <span class="nx">prompt</span><span class="p">(</span><span class="dl">"</span><span class="s2">what is its value?</span><span class="dl">"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Property access can be chained together:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">obj</span><span class="p">.</span><span class="nx">details</span><span class="p">.</span><span class="nx">color</span><span class="p">;</span> <span class="c1">// orange</span>
+<span class="nx">obj</span><span class="p">[</span><span class="dl">"</span><span class="s2">details</span><span class="dl">"</span><span class="p">][</span><span class="dl">"</span><span class="s2">size</span><span class="dl">"</span><span class="p">];</span> <span class="c1">// 12</span>
+</code></pre></div></div>
+
+<p>Objects are always references, so unless something is explicitly copying the object, mutations to an object would be visible to the outside.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="kd">function</span> <span class="nx">doSomething</span><span class="p">(</span><span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">o</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">doSomething</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">x</span><span class="p">);</span> <span class="c1">// 1</span>
+</code></pre></div></div>
+
+<p>This also means two separately created objects will never be equal (<code class="language-plaintext highlighter-rouge">!==</code>), because they are different references. If you hold two references of the same object, mutating one would be observable through the other.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="kd">const</span> <span class="nx">stillMe</span> <span class="o">=</span> <span class="nx">me</span><span class="p">;</span>
+<span class="nx">me</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">stillMe</span><span class="p">.</span><span class="nx">x</span><span class="p">);</span> <span class="c1">// 1</span>
+</code></pre></div></div>
+
+<p>For more on objects and prototypes, see the <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object"><code class="language-plaintext highlighter-rouge">Object</code> reference page</a>. For more information on the object initializer syntax, see its <a href="/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer">reference page</a>.</p>
+
+<p>This page has omitted all details about object prototypes and inheritance because you can usually achieve inheritance with <a href="#classes">classes</a> without touching the underlying mechanism (which you may have heard to be abstruse). To learn about them, see <a href="/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain">Inheritance and the prototype chain</a>.</p>
+
+<h2 id="arrays">Arrays</h2>
+
+<p>Arrays in JavaScript are actually a special type of object. They work very much like regular objects (numerical properties can naturally be accessed only using <code class="language-plaintext highlighter-rouge">[]</code> syntax) but they have one magic property called <code class="language-plaintext highlighter-rouge">length</code>. This is always one more than the highest index in the array.</p>
+
+<p>Arrays are usually created with array literals:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">dog</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">cat</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">hen</span><span class="dl">"</span><span class="p">];</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="c1">// 3</span>
+</code></pre></div></div>
+
+<p>JavaScript arrays are still objects — you can assign any properties to them, including arbitrary number indices. The only “magic” is that <code class="language-plaintext highlighter-rouge">length</code> will be automatically updated when you set a particular index.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">dog</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">cat</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">hen</span><span class="dl">"</span><span class="p">];</span>
+<span class="nx">a</span><span class="p">[</span><span class="mi">100</span><span class="p">]</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">fox</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span> <span class="c1">// 101</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span> <span class="c1">// ['dog', 'cat', 'hen', empty × 97, 'fox']</span>
+</code></pre></div></div>
+
+<p>The array we got above is called a <a href="/en-US/docs/Web/JavaScript/Guide/Indexed_collections#sparse_arrays"><em>sparse array</em></a> because there are uninhabited slots in the middle, and will cause the engine to deoptimize it from an array to a hash table. Make sure your array is densely populated!</p>
+
+<p>Out-of-bounds indexing doesn’t throw. If you query a non-existent array index, you’ll get a value of <code class="language-plaintext highlighter-rouge">undefined</code> in return:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">dog</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">cat</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">hen</span><span class="dl">"</span><span class="p">];</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">a</span><span class="p">[</span><span class="mi">90</span><span class="p">]);</span> <span class="c1">// undefined</span>
+</code></pre></div></div>
+
+<p>Arrays can have any elements and can grow or shrink arbitrarily.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="dl">"</span><span class="s2">foo</span><span class="dl">"</span><span class="p">,</span> <span class="kc">true</span><span class="p">];</span>
+<span class="nx">arr</span><span class="p">.</span><span class="nx">push</span><span class="p">({});</span>
+<span class="c1">// arr = [1, "foo", true, {}]</span>
+</code></pre></div></div>
+
+<p>Arrays can be iterated with the <code class="language-plaintext highlighter-rouge">for</code> loop, as you can in other C-like languages:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">a</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Do something with a[i]</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Or, since arrays are iterable, you can use the <a href="/en-US/docs/Web/JavaScript/Reference/Statements/for...of"><code class="language-plaintext highlighter-rouge">for...of</code></a> loop, which is synonymous to C++/Java’s <code class="language-plaintext highlighter-rouge">for (int x : arr)</code> syntax:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">currentValue</span> <span class="k">of</span> <span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Do something with currentValue</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Arrays come with a plethora of <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">array methods</a>. Many of them would iterate the array — for example, <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map"><code class="language-plaintext highlighter-rouge">map()</code></a> would apply a callback to every array element, and return a new array:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">babies</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">dog</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">cat</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">hen</span><span class="dl">"</span><span class="p">].</span><span class="nx">map</span><span class="p">((</span><span class="nx">name</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="s2">`baby </span><span class="p">${</span><span class="nx">name</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+<span class="c1">// babies = ['baby dog', 'baby cat', 'baby hen']</span>
+</code></pre></div></div>
+
+<h2 id="functions">Functions</h2>
+
+<p>Along with objects, functions are the core component in understanding JavaScript. The most basic function declaration looks like this:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">total</span> <span class="o">=</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">total</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>A JavaScript function can take 0 or more parameters. The function body can contain as many statements as you like and can declare its own variables which are local to that function. The <a href="/en-US/docs/Web/JavaScript/Reference/Statements/return"><code class="language-plaintext highlighter-rouge">return</code></a> statement can be used to return a value at any time, terminating the function. If no return statement is used (or an empty return with no value), JavaScript returns <code class="language-plaintext highlighter-rouge">undefined</code>.</p>
+
+<p>Functions can be called with more or fewer parameters than it specifies. If you call a function without passing the parameters it expects, they will be set to <code class="language-plaintext highlighter-rouge">undefined</code>. If you pass more parameters than it expects, the function will ignore the extra parameters.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">add</span><span class="p">();</span> <span class="c1">// NaN</span>
+<span class="c1">// Equivalent to add(undefined, undefined)</span>
+
+<span class="nx">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span> <span class="c1">// 5</span>
+<span class="c1">// added the first two; 4 was ignored</span>
+</code></pre></div></div>
+
+<p>There are a number of other parameter syntaxes available. For example, the <a href="/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters">rest parameter syntax</a> allows collecting all the extra parameters passed by the caller into an array, similar to Python’s <code class="language-plaintext highlighter-rouge">*args</code>. (Since JS doesn’t have named parameters on the language level, there’s no <code class="language-plaintext highlighter-rouge">**kwargs</code>.)</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">avg</span><span class="p">(...</span><span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">item</span> <span class="k">of</span> <span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">item</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">sum</span> <span class="o">/</span> <span class="nx">args</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">avg</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span> <span class="c1">// 3.5</span>
+</code></pre></div></div>
+
+<p>In the above code, the variable <code class="language-plaintext highlighter-rouge">args</code> holds all the values that were passed into the function.</p>
+
+<p>The rest parameter will store all arguments <em>after</em> where it’s declared, but not before. i.e. <code class="language-plaintext highlighter-rouge">function avg(firstValue, ...args)</code> will store the first value passed into the function in the <code class="language-plaintext highlighter-rouge">firstValue</code> variable and the remaining arguments in <code class="language-plaintext highlighter-rouge">args</code>.</p>
+
+<p>If a function accepts a list of arguments and you already hold an array, you can use the <a href="/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax">spread syntax</a> in the function call to <em>spread</em> the array as a list of elements. For instance: <code class="language-plaintext highlighter-rouge">avg(...numbers)</code>.</p>
+
+<p>We mentioned that JavaScript doesn’t have named parameters. It’s possible, though, to implement them using <a href="/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">object destructuring</a>, which allows objects to be conveniently packed and unpacked.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Note the { } braces: this is destructuring an object</span>
+<span class="kd">function</span> <span class="nx">area</span><span class="p">({</span> <span class="nx">width</span><span class="p">,</span> <span class="nx">height</span> <span class="p">})</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">width</span> <span class="o">*</span> <span class="nx">height</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// The { } braces here create a new object</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">area</span><span class="p">({</span> <span class="na">width</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="na">height</span><span class="p">:</span> <span class="mi">3</span> <span class="p">}));</span>
+</code></pre></div></div>
+
+<p>There’s also the <a href="/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters"><em>default parameter</em></a> syntax, which allows omitted parameters (or those passed as <code class="language-plaintext highlighter-rouge">undefined</code>) to have a default value.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">avg</span><span class="p">(</span><span class="nx">firstValue</span><span class="p">,</span> <span class="nx">secondValue</span><span class="p">,</span> <span class="nx">thirdValue</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span><span class="nx">firstValue</span> <span class="o">+</span> <span class="nx">secondValue</span> <span class="o">+</span> <span class="nx">thirdValue</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">avg</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// 1, instead of NaN</span>
+</code></pre></div></div>
+
+<h3 id="anonymous-functions">Anonymous functions</h3>
+
+<p>JavaScript lets you create anonymous functions — that is, functions without names. In practice, anonymous functions are typically used as arguments to other functions, immediately assigned to a variable that can be used to invoke the function, or returned from another function.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Note that there's no function name before the parentheses</span>
+<span class="kd">const</span> <span class="nx">avg</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(...</span><span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">item</span> <span class="k">of</span> <span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">item</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">sum</span> <span class="o">/</span> <span class="nx">args</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>That makes the anonymous function invocable by calling <code class="language-plaintext highlighter-rouge">avg()</code> with some arguments — that is, it’s semantically equivalent to declaring the function using the <code class="language-plaintext highlighter-rouge">function avg() {}</code> declaration syntax.</p>
+
+<p>There’s another way to define anonymous functions — using an <a href="/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">arrow function expression</a>.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Note that there's no function name before the parentheses</span>
+<span class="kd">const</span> <span class="nx">avg</span> <span class="o">=</span> <span class="p">(...</span><span class="nx">args</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">item</span> <span class="k">of</span> <span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">item</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">sum</span> <span class="o">/</span> <span class="nx">args</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1">// You can omit the `return` when simply returning an expression</span>
+<span class="kd">const</span> <span class="nx">sum</span> <span class="o">=</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span> <span class="o">+</span> <span class="nx">c</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Arrow functions are not semantically equivalent to function expressions — for more information, see its <a href="/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">reference page</a>.</p>
+
+<p>There’s another way that anonymous functions can be useful: it can be simultaneously declared and invoked in a single expression, called an <a href="/en-US/docs/Glossary/IIFE">Immediately invoked function expression (IIFE)</a>:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// …</span>
+<span class="p">})();</span>
+</code></pre></div></div>
+
+<p>For use-cases of IIFEs, you can read <a href="/en-US/docs/Web/JavaScript/Closures#emulating_private_methods_with_closures">emulating private methods with closures</a>.</p>
+
+<h3 id="recursive-functions">Recursive functions</h3>
+
+<p>JavaScript allows you to call functions recursively. This is particularly useful for dealing with tree structures, such as those found in the browser DOM.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">countChars</span><span class="p">(</span><span class="nx">elm</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">elm</span><span class="p">.</span><span class="nx">nodeType</span> <span class="o">===</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// TEXT_NODE</span>
+    <span class="k">return</span> <span class="nx">elm</span><span class="p">.</span><span class="nx">nodeValue</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="kd">let</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">child</span><span class="p">;</span> <span class="p">(</span><span class="nx">child</span> <span class="o">=</span> <span class="nx">elm</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">count</span> <span class="o">+=</span> <span class="nx">countChars</span><span class="p">(</span><span class="nx">child</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">count</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Function expressions can be named as well, which allows them to be recursive.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">charsInBody</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="nx">counter</span><span class="p">(</span><span class="nx">elm</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">elm</span><span class="p">.</span><span class="nx">nodeType</span> <span class="o">===</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// TEXT_NODE</span>
+    <span class="k">return</span> <span class="nx">elm</span><span class="p">.</span><span class="nx">nodeValue</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="kd">let</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">child</span><span class="p">;</span> <span class="p">(</span><span class="nx">child</span> <span class="o">=</span> <span class="nx">elm</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">count</span> <span class="o">+=</span> <span class="nx">counter</span><span class="p">(</span><span class="nx">child</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">count</span><span class="p">;</span>
+<span class="p">})(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>The name provided to a function expression as above is only available to the function’s own scope. This allows more optimizations to be done by the engine and results in more readable code. The name also shows up in the debugger and some stack traces, which can save you time when debugging.</p>
+
+<p>If you are used to functional programming, beware of the performance implications of recursion in JavaScript. Although the language specification specifies <a href="https://en.wikipedia.org/wiki/Tail_call">tail-call optimization</a>, only JavaScriptCore (used by Safari) has implemented it, due to the difficulty of recovering stack traces and debuggability. For deep recursion, consider using iteration instead to avoid stack overflow.</p>
+
+<h3 id="functions-are-first-class-objects">Functions are first-class objects</h3>
+
+<p>JavaScript functions are first-class objects. This means that they can be assigned to variables, passed as arguments to other functions, and returned from other functions. In addition, JavaScript supports <a href="/en-US/docs/Web/JavaScript/Closures">closures</a> out-of-the-box without explicit capturing, allowing you to conveniently apply functional programming styles.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Function returning function</span>
+<span class="kd">const</span> <span class="nx">add</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="nx">y</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">;</span>
+<span class="c1">// Function accepting function</span>
+<span class="kd">const</span> <span class="nx">babies</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">dog</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">cat</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">hen</span><span class="dl">"</span><span class="p">].</span><span class="nx">map</span><span class="p">((</span><span class="nx">name</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="s2">`baby </span><span class="p">${</span><span class="nx">name</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Note that JavaScript functions are themselves objects — like everything else in JavaScript — and you can add or change properties on them just like we’ve seen earlier in the Objects section.</p>
+
+<h3 id="inner-functions">Inner functions</h3>
+
+<p>JavaScript function declarations are allowed inside other functions. An important detail of nested functions in JavaScript is that they can access variables in their parent function’s scope:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">parentFunc</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="kd">function</span> <span class="nx">nestedFunc</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="c1">// parentFunc can't use this</span>
+    <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">nestedFunc</span><span class="p">();</span> <span class="c1">// 5</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This provides a great deal of utility in writing more maintainable code. If a called function relies on one or two other functions that are not useful to any other part of your code, you can nest those utility functions inside it. This keeps the number of functions that are in the global scope down.</p>
+
+<p>This is also a great counter to the lure of global variables. When writing complex code, it is often tempting to use global variables to share values between multiple functions, which leads to code that is hard to maintain. Nested functions can share variables in their parent, so you can use that mechanism to couple functions together without polluting your global namespace.</p>
+
+<h2 id="classes">Classes</h2>
+
+<p>JavaScript offers the <a href="/en-US/docs/Web/JavaScript/Reference/Classes">class</a> syntax that’s very similar to languages like Java.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nx">sayHello</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s2">`Hello, I'm </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2">!`</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">const</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">"</span><span class="s2">John</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">sayHello</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>JavaScript classes are just functions that must be instantiated with the <a href="/en-US/docs/Web/JavaScript/Reference/Operators/new"><code class="language-plaintext highlighter-rouge">new</code></a> operator. Every time a class is instantiated, it returns an object containing the methods and properties that the class specified. Classes don’t enforce any code organization — for example, you can have functions returning classes, or you can have multiple classes per file. Here’s an example of how ad hoc the creation of a class can be: it’s just an expression returned from an arrow function. This pattern is called a <a href="/en-US/docs/Web/JavaScript/Reference/Classes#mix-ins">mixin</a>.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">withAuthentication</span> <span class="o">=</span> <span class="p">(</span><span class="nx">cls</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="kd">class</span> <span class="kd">extends</span> <span class="nx">cls</span> <span class="p">{</span>
+    <span class="nx">authenticate</span><span class="p">()</span> <span class="p">{</span>
+      <span class="c1">// …</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+
+<span class="kd">class</span> <span class="nx">Admin</span> <span class="kd">extends</span> <span class="nx">withAuthentication</span><span class="p">(</span><span class="nx">Person</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// …</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Static properties are created by prepending <code class="language-plaintext highlighter-rouge">static</code>. Private properties are created by prepending a hash <code class="language-plaintext highlighter-rouge">#</code> (not <code class="language-plaintext highlighter-rouge">private</code>). The hash is an integral part of the property name. (Think about <code class="language-plaintext highlighter-rouge">#</code> as <code class="language-plaintext highlighter-rouge">_</code> in Python.) Unlike most other languages, there’s absolutely no way to read a private property outside the class body — not even in derived classes.</p>
+
+<p>For a detailed guide on various class features, you can read the <a href="/en-US/docs/Web/JavaScript/Guide/Using_Classes">guide page</a>.</p>
+
+<h2 id="asynchronous-programming">Asynchronous programming</h2>
+
+<p>JavaScript is single-threaded by nature. There’s no <a href="https://en.wikipedia.org/wiki/Parallel_computing">paralleling</a>; only <a href="https://en.wikipedia.org/wiki/Concurrent_computing">concurrency</a>. Asynchronous programming is powered by an <a href="/en-US/docs/Web/JavaScript/EventLoop">event loop</a>, which allows a set of tasks to be queued and polled for completion.</p>
+
+<p>There are three idiomatic ways to write asynchronous code in JavaScript:</p>
+
+<ul>
+  <li>Callback-based (such as <a href="/en-US/docs/Web/API/setTimeout"><code class="language-plaintext highlighter-rouge">setTimeout()</code></a>)</li>
+  <li><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise"><code class="language-plaintext highlighter-rouge">Promise</code></a>-based</li>
+  <li><a href="/en-US/docs/Web/JavaScript/Reference/Statements/async_function"><code class="language-plaintext highlighter-rouge">async</code></a>/<a href="/en-US/docs/Web/JavaScript/Reference/Operators/await"><code class="language-plaintext highlighter-rouge">await</code></a>, which is a syntactic sugar for Promises</li>
+</ul>
+
+<p>For example, here’s how a file-read operation may look like in JavaScript:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Callback-based</span>
+<span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="nx">filename</span><span class="p">,</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">content</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// This callback is invoked when the file is read, which could be after a while</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">content</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="c1">// Code here will be executed while the file is waiting to be read</span>
+
+<span class="c1">// Promise-based</span>
+<span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="nx">filename</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">content</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// What to do when the file is read</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">content</span><span class="p">);</span>
+  <span class="p">}).</span><span class="k">catch</span><span class="p">((</span><span class="nx">err</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+  <span class="p">});</span>
+<span class="c1">// Code here will be executed while the file is waiting to be read</span>
+
+<span class="c1">// Async/await</span>
+<span class="k">async</span> <span class="kd">function</span> <span class="nx">readFile</span><span class="p">(</span><span class="nx">filename</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">content</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="nx">filename</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">content</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The core language doesn’t specify any asynchronous programming features, but it’s crucial when interacting with the external environment — from <a href="/en-US/docs/Web/API/Permissions_API">asking user permissions</a>, to <a href="/en-US/docs/Web/API/Fetch_API/Using_Fetch">fetching data</a>, to <a href="https://nodejs.org/api/fs.html">reading files</a>. Keeping the potentially long-running operations async ensures that other processes can still run while this one waits — for example, the browser will not freeze while waiting for the user to click a button to grant permission.</p>
+
+<p>If you have an async value, it’s not possible to get its value synchronously. For example, if you have a promise, you can only access the eventual result via the <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then"><code class="language-plaintext highlighter-rouge">then()</code></a> method. Similarly, <a href="/en-US/docs/Web/JavaScript/Reference/Operators/await"><code class="language-plaintext highlighter-rouge">await</code></a> can only be used in an async context, which is usually an async function or a module. Promises are <em>never blocking</em> — only the logic depending on the promise’s result will be deferred; everything else continues to execute in the meantime. If you are a functional programmer, you may recognize promises as <a href="https://en.wikipedia.org/wiki/Monad_(functional_programming)">monads</a> which can be mapped with <code class="language-plaintext highlighter-rouge">then()</code> (however, they are not <em>proper</em> monads because they auto-flatten; i.e. you can’t have a <code class="language-plaintext highlighter-rouge">Promise&lt;Promise&lt;T&gt;&gt;</code>).</p>
+
+<p>In fact, the single-threaded model has made Node.js a popular choice for server-side programming due to its non-blocking IO, making handling a large number of database or file-system requests very performant. However, CPU-bound (computationally intensive) tasks that’s pure JavaScript will still block the main thread. To achieve real paralleling, you may need to use <a href="/en-US/docs/Web/API/Web_Workers_API/Using_web_workers">workers</a>.</p>
+
+<p>To learn more about asynchronous programming, you can read about <a href="/en-US/docs/Web/JavaScript/Guide/Using_promises">using promises</a> or follow the <a href="/en-US/docs/Learn/JavaScript/Asynchronous">asynchronous JavaScript</a> tutorial.</p>
+
+<h2 id="modules">Modules</h2>
+
+<p>JavaScript also specifies a module system supported by most runtimes. A module is usually a file, identified by it’s file path or URL. You can use the <a href="/en-US/docs/Web/JavaScript/Reference/Statements/import"><code class="language-plaintext highlighter-rouge">import</code></a> and <a href="/en-US/docs/Web/JavaScript/Reference/Statements/export"><code class="language-plaintext highlighter-rouge">export</code></a> statements to exchange data between modules:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">foo</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./foo.js</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="c1">// Unexported variables are local to the module</span>
+<span class="kd">const</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Unlike Haskell, Python, Java, etc., JavaScript module resolution is entirely host-defined — it’s usually based on URLs or file paths, so relative file paths “just work” and are relative to the current module’s path instead of some project root path.</p>
+
+<p>However, the JavaScript language doesn’t offer standard library modules — all core functionalities are powered by global variables like <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math"><code class="language-plaintext highlighter-rouge">Math</code></a> and <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl"><code class="language-plaintext highlighter-rouge">Intl</code></a> instead. This is due to the long history of JavaScript lacking a module system, and the fact that opting into the module system involves some changes to the runtime setup.</p>
+
+<p>Different runtimes may use different module systems. For example, <a href="https://nodejs.org/en/">Node.js</a> uses the package manager <a href="https://www.npmjs.com/">npm</a> and is mostly file-system based, while <a href="https://deno.land/">Deno</a> and browsers are fully URL-based and modules can be resolved from HTTP URLs.</p>
+
+<p>For more information, see the <a href="/en-US/docs/Web/JavaScript/Guide/Modules">modules guide page</a>.</p>
+
+<h2 id="language-and-runtime">Language and runtime</h2>
+
+<p>Throughout this page, we’ve constantly mentioned that certain features are <em>language-level</em> while others are <em>runtime-level</em>.</p>
+
+<p>JavaScript is a general-purpose scripting language. The <a href="/en-US/docs/Web/JavaScript/JavaScript_technologies_overview#javascript_the_core_language_ecmascript">core language specification</a> focuses on pure computational logic. It doesn’t deal with any input/output — in fact, without extra runtime-level APIs (most notably <a href="/en-US/docs/Web/API/console/log"><code class="language-plaintext highlighter-rouge">console.log()</code></a>), a JavaScript program’s behavior is entirely unobservable.</p>
+
+<p>A runtime, or a host, is something that feeds data to the JavaScript engine (the interpreter), provides extra global properties, and provides hooks for the engine to interact with the outside world. Module resolution, reading data, printing messages, sending network requests, etc. are all runtime-level operations. Since its inception, JavaScript has been adopted in various environments, such as browsers (which provide APIs like <a href="/en-US/docs/Web/API/Document_Object_Model">DOM</a>), Node.js (which provides APIs like <a href="https://nodejs.org/api/fs.html">file system access</a>), etc. JavaScript has been successfully integrated in web (which was its primary purpose), mobile apps, desktop apps, server-side apps, serverless, embedded systems, and more. While you learn about JavaScript core features, it’s also important to understand host-provided features in order to put the knowledge to use. For example, you can read about all <a href="/en-US/docs/Web/API">web platform APIs</a>, which are implemented by browsers, and sometimes non-browsers.</p>
+
+<h2 id="further-exploration">Further exploration</h2>
+
+<p>This page offers a very basic insight into how various JavaScript features compare with other languages. If you want to learn more about the language itself and the nuances with each feature, you can read the <a href="/en-US/docs/Web/JavaScript/Guide">JavaScript guide</a> and the <a href="/en-US/docs/Web/JavaScript/Reference">JavaScript reference</a>.</p>
+
+:ET
